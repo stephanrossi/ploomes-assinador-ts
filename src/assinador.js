@@ -48,7 +48,7 @@ export async function createDocument(quote) {
     let createDoc = await api.post('/documents', {
         "files": [
             {
-                "displayName": "Stephan - Teste automatização",
+                "displayName": "Stephan - Teste automação1",
                 "id": documentID,
                 "name": "Contrato.pdf",
                 "contentType": "application/pdf"
@@ -64,14 +64,53 @@ export async function createDocument(quote) {
                     "email": "stephan@previsa.com.br"
                 },
                 "allowElectronicSignature": true,
+                "prePositionedMarks": [
+                    {
+                        "type": "SignatureVisualRepresentation",
+                        "uploadId": documentID,
+                        "topLeftX": 50,
+                        "topLeftY": 240,
+                        "width": 150,
+                        // "height": 5,
+                        "pageNumber": 11
+                    },
+                    {
+                        "type": "SignatureInitials",
+                        "uploadId": documentID,
+                        "topLeftX": 50,
+                        "topLeftY": 375,
+                        "width": 150,
+                        // "height": 5,
+                        "pageNumber": 11
+                    },
+                    {
+                        "type": "SignatureInitials",
+                        "uploadId": documentID,
+                        "topLeftX": 150,
+                        "topLeftY": 660,
+                        "width": 150,
+                        // "height": 5,
+                        "pageNumber": 11
+                    },
+                ]
             },
-            // {
+        ]
+    });
+
+
+    // console.log(createDoc);
+}
+
+createDocument(3432071)
+// {
             //     "type": "Signer",
             //     "user": {
             //         "name": "Thiago Vitor de Faria Silva",
             //         "identifier": "05256067699",
             //         "email": "thiagov@previsa.com.br"
-            //     }
+            //     },
+            // "allowElectronicSignature": false,
+
             // },
             // {
             //     "type": "Signer",
@@ -79,13 +118,7 @@ export async function createDocument(quote) {
             //         "name": "Lafayette Vilella de Moraes Neto",
             //         "identifier": "62845888600",
             //         "email": "lafayette@previsa.com.br"
-            //     }
+            //     },
+            // "allowElectronicSignature": false,
+
             // },
-        ]
-    })
-
-
-    // console.log(createDoc);
-}
-
-createDocument(3432071)
