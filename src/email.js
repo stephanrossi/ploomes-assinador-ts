@@ -26,7 +26,7 @@ const readMail = async () => {
             let obj = {};
             emailText.split('\n').forEach(v => v.replace(/\s*(.*)\s*:\s*(.*)\s*/, (s, key, val) => {
                 obj[key] = isNaN(val) || val.length < 1 ? val || undefined : Number(val);
-            }));
+            })); 
             let idContrato = parseInt(obj.id_contrato)
 
             Assinador.createDocument(idContrato)
