@@ -1,5 +1,7 @@
 import fetch from "node-fetch";
 import download from "download";
+import pdf from 'pdf-page-counter'
+import path from 'path'
 
 const BASEURL = "https://api2.ploomes.com/"
 
@@ -47,6 +49,9 @@ export async function getPersonData(quote) {
 }
 
 export async function getQuoteDoc(quote) {
+
+    let quoteInfo = []
+
     const get = await fetch(BASEURL + `Quotes?$filter=Id+eq+${quote}`,
         {
             method: 'get',
@@ -66,6 +71,23 @@ export async function getQuoteDoc(quote) {
 
     let downloadLocation = String(`/assets/files/quotes/${quote}.pdf`)
 
-    return downloadLocation
+    let pdfPageCount = ''
+
+
+    try {
+        let __dirname = path.resolve();
+
+        let getPdfPages = await pdf(path.join(__dirname, downloadLocation))
+        pdfPageCount = getPdfPages.numpages
+
+    } catch (error) {
+        console.log(error);
+    }
+
+    quoteInfo.push(downloadLocation, pdfPageCount)
+
+    return quoteInfo
 
 }
+
+getQuoteDoc(3432071)
