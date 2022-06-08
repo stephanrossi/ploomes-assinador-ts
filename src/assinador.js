@@ -1,13 +1,8 @@
 import * as Ploomes from './ploomes.js'
 import pdf2base64 from 'pdf-to-base64'
 import path from 'path'
+
 import api from './api/assinador.js'
-
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 export async function getQuoteHash(quote) {
     let getQuoteInfo = await Ploomes.getQuoteDoc(quote)
@@ -18,8 +13,10 @@ export async function getQuoteHash(quote) {
 
     let hash = ''
 
+    let __dirname = path.resolve();
+
     try {
-        hash = await pdf2base64(path.join(__dirname, '..', getQuote))
+        hash = await pdf2base64(path.join(__dirname, getQuote))
     } catch (error) {
         console.log(error);
     }
@@ -49,7 +46,6 @@ export async function uploadHash(quote) {
     return hashInfo
 
 }
-
 
 export async function createDocument(quote, clientName, proposeId) {
     let getDocInfo = await uploadHash(quote)
@@ -133,7 +129,7 @@ export async function createDocument(quote, clientName, proposeId) {
                 // },
             ]
         });
-        console.log("Documento criado!");
+        console.log("Documento criado em " + new Date());
     } catch (error) {
         console.log(error);
     }

@@ -1,6 +1,7 @@
 import download from "download";
 import pdf from 'pdf-page-counter'
 import path from 'path'
+import fs from 'fs'
 
 import api from './api/ploomes.js'
 
@@ -35,7 +36,7 @@ export async function getQuoteDoc(quote) {
 
     const getQuoteInfo = await api.get(`/Quotes?$filter=Id+eq+${quote}`)
 
-    let quoteDocURL = await getQuoteInfo.data.value[0].DocumentUrl
+    let quoteDocURL = getQuoteInfo.data.value[0].DocumentUrl
 
     await download(quoteDocURL, 'assets/files/quotes', {
         filename: `${quote}.pdf`
@@ -43,20 +44,22 @@ export async function getQuoteDoc(quote) {
 
     let downloadLocation = String(`/assets/files/quotes/${quote}.pdf`)
 
-    let pdfPageCount = ''
-
+    let pdfPagesNumber = ''
 
     try {
         let __dirname = path.resolve();
 
-        let getPdfPages = await pdf(path.join(__dirname, downloadLocation))
-        pdfPageCount = getPdfPages.numpages
+        let pdfRead = fs.readFileSync(path.join(__dirname, downloadLocation))
+
+        let getPdfPages = await pdf(pdfRead)
+
+        pdfPagesNumber = getPdfPages.numpages
 
     } catch (error) {
         console.log(error);
     }
 
-    quoteInfo.push(downloadLocation, pdfPageCount)
+    quoteInfo.push(downloadLocation, pdfPagesNumber)
 
     return quoteInfo
 
