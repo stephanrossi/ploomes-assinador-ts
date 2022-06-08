@@ -1,6 +1,5 @@
 import * as Assinador from './assinador.js'
 
-
 import imaps from 'imap-simple'
 import { convert } from 'html-to-text';
 import { READ_MAIL_CONFIG } from './config.js';
@@ -26,10 +25,13 @@ const readMail = async () => {
             let obj = {};
             emailText.split('\n').forEach(v => v.replace(/\s*(.*)\s*:\s*(.*)\s*/, (s, key, val) => {
                 obj[key] = isNaN(val) || val.length < 1 ? val || undefined : Number(val);
-            })); 
-            let idContrato = parseInt(obj.id_contrato)
+            }));
 
-            Assinador.createDocument(idContrato)
+            let contractId = parseInt(obj.id_contrato)
+            let clientName = obj.Cliente.toUpperCase()
+            let proposeId = parseInt(obj.Proposta_codigo)
+
+            Assinador.createDocument(contractId, clientName, proposeId)
         });
         connection.end();
     } catch (error) {
@@ -37,5 +39,5 @@ const readMail = async () => {
     }
 };
 
-setInterval(readMail(), 60000)
+readMail()
 // export default readMail

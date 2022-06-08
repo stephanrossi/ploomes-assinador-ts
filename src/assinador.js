@@ -1,8 +1,7 @@
 import * as Ploomes from './ploomes.js'
 import pdf2base64 from 'pdf-to-base64'
 import path from 'path'
-import api from './api/index.js'
-import pdf from 'pdf-page-counter'
+import api from './api/assinador.js'
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -52,7 +51,7 @@ export async function uploadHash(quote) {
 }
 
 
-export async function createDocument(quote) {
+export async function createDocument(quote, clientName, proposeId) {
     let getDocInfo = await uploadHash(quote)
     let documentID = getDocInfo[0]
     let pdfPageCount = getDocInfo[1]
@@ -64,12 +63,12 @@ export async function createDocument(quote) {
     let personEmail = personData[2]
 
     try {
-        let createDoc = await api.post('/documents', {
+        await api.post('/documents', {
             "files": [
                 {
-                    "displayName": "Stephan - Teste automação2",
+                    "displayName": `CONTRATO - ${clientName} - ${proposeId}`,
                     "id": documentID,
-                    "name": "Contrato.pdf",
+                    "name": `CONTRATO - ${clientName}.pdf`,
                     "contentType": "application/pdf"
                 }
             ],
@@ -89,7 +88,7 @@ export async function createDocument(quote) {
                             "uploadId": documentID,
                             "topLeftX": 150,
                             "topLeftY": 660,
-                            "width": 150,
+                            "width": 200,
                             "pageNumber": pdfPageCount
                         },
                     ]
@@ -108,7 +107,7 @@ export async function createDocument(quote) {
                 //             "uploadId": documentID,
                 //             "topLeftX": 50,
                 //             "topLeftY": 240,
-                //             "width": 150,
+                //             "width": 200,
                 //             "pageNumber": pdfPageCount
                 //         },
                 //     ]
@@ -127,7 +126,7 @@ export async function createDocument(quote) {
                 //             "uploadId": documentID,
                 //             "topLeftX": 50,
                 //             "topLeftY": 375,
-                //             "width": 150,
+                //             "width": 200,
                 //             "pageNumber": pdfPageCount
                 //         },
                 //     ]
