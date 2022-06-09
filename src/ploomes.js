@@ -90,4 +90,3 @@ export async function getQuoteDoc(quote) {
         return false;
     }
 }
-getQuoteDoc(23213456)

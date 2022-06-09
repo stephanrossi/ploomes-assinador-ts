@@ -6,46 +6,51 @@ import api from './api/assinador.js'
 import { signerLogger } from './logger.js'
 
 export async function getQuoteHash(quote) {
-    let getQuoteInfo = await Ploomes.getQuoteDoc(quote)
-    let getQuote = getQuoteInfo[0]
-    let pdfPageCount = getQuoteInfo[1];
-
-    let quoteParams = []
-
-    let hash = ''
-
-    let __dirname = path.resolve();
 
     try {
+        let getQuoteInfo = await Ploomes.getQuoteDoc(quote)
+        let getQuote = getQuoteInfo[0]
+        let pdfPageCount = getQuoteInfo[1];
+
+        let quoteParams = []
+
+        let hash = ''
+
+        let __dirname = path.resolve();
+
         hash = await pdf2base64(path.join(__dirname, getQuote))
+
+        quoteParams.push(hash, pdfPageCount)
+
+        return quoteParams
     } catch (error) {
-        console.log(error);
+        signerLogger.error(`getQuoteHash: ${error}`)
+        return false;
     }
-
-    quoteParams.push(hash, pdfPageCount)
-
-    return quoteParams
-
 }
 
 export async function uploadHash(quote) {
-    let hashInfo = []
 
-    let getHash = await getQuoteHash(quote)
+    try {
+        let hashInfo = []
 
-    let hash = getHash[0]
-    let pdfPageCount = getHash[1]
+        let getHash = await getQuoteHash(quote)
 
-    let postHash = await api.post('/uploads/bytes', {
-        "bytes": hash
-    })
+        let hash = getHash[0]
+        let pdfPageCount = getHash[1]
 
-    let documentID = postHash.data.id
+        let postHash = await api.post('/uploads/bytes', {
+            "bytes": hash
+        })
 
-    hashInfo.push(documentID, pdfPageCount)
+        let documentID = postHash.data.id
 
-    return hashInfo
+        hashInfo.push(documentID, pdfPageCount)
 
+        return hashInfo
+    } catch (error) {
+        signerLogger.error(`uploadHash: ${error}`)
+    }
 }
 
 export async function createDocument(quote, clientName, proposeId) {
@@ -132,7 +137,6 @@ export async function createDocument(quote, clientName, proposeId) {
         });
         signerLogger.info(`CONTRATO - ${clientName} - ${proposeId} criado.`)
     } catch (error) {
-        signerLogger.error(error)
-        console.log(error);
+        signerLogger.error(`createDocument: ${error}`)
     }
 }
