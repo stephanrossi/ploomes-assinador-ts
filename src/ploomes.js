@@ -4,49 +4,75 @@ import path from 'path'
 import fs from 'fs'
 
 import api from './api/ploomes.js'
+import { ploomesLogger } from "./logger.js";
 
 export async function getPersonID(quote) {
 
-    const getPersonID = await api.get(`/Quotes?$filter=Id+eq+${quote}`)
+    try {
+        const getPersonID = await api.get(`/Quotes?$filter=Id+eq+${quote}`)
 
-    let personID = getPersonID.data.value[0].PersonId
+        let personID = getPersonID.data.value[0].PersonId
 
-    return personID
+        return personID
+    } catch (error) {
+        ploomesLogger.error(`getPersonID: ${error}`)
+        return false;
+    }
 }
 
 export async function getPersonData(quote) {
 
     let personData = []
+
     let personID = await getPersonID(quote)
 
-    const getPersonData = await api.get(`/Contacts?$filter=Id+eq+${personID}`)
+    try {
+        const getPersonData = await api.get(`/Contacts?$filter=Id+eq+${personID}`)
 
-    let personName = getPersonData.data.value[0].Name
-    let personCPF = getPersonData.data.value[0].CPF
-    let personEmail = getPersonData.data.value[0].Email
+        let personName = getPersonData.data.value[0].Name
+        let personCPF = getPersonData.data.value[0].CPF
+        let personEmail = getPersonData.data.value[0].Email
 
-    personData.push(personName, personCPF, personEmail)
+        if (personCPF == null || '' || undefined) {
+            ploomesLogger.error(`CPF is missing on quote ${quote}`)
+            return false;
+        }
 
-    return personData
+        if (personEmail == null || '' || undefined) {
+            ploomesLogger.error(`E-mail is missing on quote ${quote}`)
+            return false;
+        }
+
+        personData.push(personName, personCPF, personEmail)
+
+        return personData
+    } catch (error) {
+        ploomesLogger.error(`getPersonData: ${error}`)
+        return false;
+    }
 }
 
 export async function getQuoteDoc(quote) {
 
     let quoteInfo = []
 
-    const getQuoteInfo = await api.get(`/Quotes?$filter=Id+eq+${quote}`)
-
-    let quoteDocURL = getQuoteInfo.data.value[0].DocumentUrl
-
-    await download(quoteDocURL, 'assets/files/quotes', {
-        filename: `${quote}.pdf`
-    })
-
-    let downloadLocation = String(`/assets/files/quotes/${quote}.pdf`)
-
-    let pdfPagesNumber = ''
-
     try {
+        const getQuoteInfo = await api.get(`/Quotes?$filter=Id+eq+${quote}`)
+
+        let quoteDocURL = getQuoteInfo.data.value[0].DocumentUrl
+
+        try {
+            await download(quoteDocURL, 'assets/files/quotes', {
+                filename: `${quote}.pdf`
+            })
+        } catch (error) {
+            ploomesLogger.error(`download: ${error}`)
+        }
+
+        let downloadLocation = String(`/assets/files/quotes/${quote}.pdf`)
+
+        let pdfPagesNumber = ''
+
         let __dirname = path.resolve();
 
         let pdfRead = fs.readFileSync(path.join(__dirname, downloadLocation))
@@ -55,12 +81,13 @@ export async function getQuoteDoc(quote) {
 
         pdfPagesNumber = getPdfPages.numpages
 
+        quoteInfo.push(downloadLocation, pdfPagesNumber)
+
+        return quoteInfo
+
     } catch (error) {
-        console.log(error);
+        ploomesLogger.error(`getQuoteDoc: ${error}`)
+        return false;
     }
-
-    quoteInfo.push(downloadLocation, pdfPagesNumber)
-
-    return quoteInfo
-
 }
+getQuoteDoc(23213456)

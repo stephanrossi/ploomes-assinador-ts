@@ -1,0 +1,10 @@
+{"level":"error","message":"CPF missing","timestamp":"2022-06-09 08:40:24"}
+{"level":"error","message":"CPF missing","timestamp":"2022-06-09 08:44:25"}
+{"level":"error","message":"CPF missing","timestamp":"2022-06-09 08:45:50"}
+{"level":"error","message":"CPF missing on quote 3799055","timestamp":"2022-06-09 08:48:25"}
+{"level":"error","message":"CPF missing on quote 3799055","timestamp":"2022-06-09 09:41:17"}
+{"level":"error","message":"getQuoteDoc: RequestError: getaddrinfo ENOTFOUND dwedw","timestamp":"2022-06-09 13:08:20"}
+{"level":"error","message":"download: RequestError: getaddrinfo ENOTFOUND fewf","timestamp":"2022-06-09 13:32:14"}
+{"level":"error","message":"getQuoteDoc: ReferenceError: quotee is not defined","timestamp":"2022-06-09 13:32:37"}
+{"level":"error","message":"getQuoteDoc: TypeError: Cannot read properties of undefined (reading 'DocumentUrl')","timestamp":"2022-06-09 13:32:53"}
+{"level":"error","message":"getQuoteDoc: TypeError: Cannot read properties of undefined (reading 'DocumentUrl')","timestamp":"2022-06-09 13:33:40"}

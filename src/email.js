@@ -1,5 +1,7 @@
 import * as Assinador from './assinador.js'
 
+import { mailLogger } from './logger.js';
+
 import imaps from 'imap-simple'
 import { convert } from 'html-to-text';
 import { READ_MAIL_CONFIG } from './config.js';
@@ -7,7 +9,9 @@ import { READ_MAIL_CONFIG } from './config.js';
 const readMail = async () => {
     try {
         const connection = await imaps.connect(READ_MAIL_CONFIG);
-        console.log('CONNECTION SUCCESSFUL', new Date().toString());
+
+        mailLogger.info('CONNECTION SUCCESSFUL.')
+
         const box = await connection.openBox('INBOX');
         const searchCriteria = ['UNSEEN'];
         const fetchOptions = {
@@ -15,6 +19,13 @@ const readMail = async () => {
             markSeen: true,
         };
         const results = await connection.search(searchCriteria, fetchOptions);
+
+        if (results.length === 0) {
+            mailLogger.info('No unread messages were found.')
+            connection.end();
+            return false;
+        }
+
         results.forEach((res) => {
             const text = res.parts.filter((part) => {
                 return part.which === 'TEXT';
@@ -35,7 +46,8 @@ const readMail = async () => {
         });
         connection.end();
     } catch (error) {
-        console.log(error);
+        mailLogger.error(`readMail: ${error}`)
+        return false;
     }
 };
 
@@ -45,4 +57,5 @@ function monitorEmail() {
     console.log("Monitorando e-mails ...");
 }
 
+// readMail()
 monitorEmail()

@@ -3,6 +3,7 @@ import pdf2base64 from 'pdf-to-base64'
 import path from 'path'
 
 import api from './api/assinador.js'
+import { signerLogger } from './logger.js'
 
 export async function getQuoteHash(quote) {
     let getQuoteInfo = await Ploomes.getQuoteDoc(quote)
@@ -68,14 +69,14 @@ export async function createDocument(quote, clientName, proposeId) {
                     "contentType": "application/pdf"
                 }
             ],
-            // "notifiedEmails": ["cleiciamonteiro@previsa.com.br"],
+            "notifiedEmails": ["cleiciamonteiro@previsa.com.br"],
             "flowActions": [
                 {
                     "type": "Signer",
                     "user": {
-                        "name": "Stephan Rossi",
-                        "identifier": "05976325610",
-                        "email": "stephan@previsa.com.br"
+                        "name": personName,
+                        "identifier": personCPF,
+                        "email": personEmail
                     },
                     "allowElectronicSignature": true,
                     "prePositionedMarks": [
@@ -89,48 +90,49 @@ export async function createDocument(quote, clientName, proposeId) {
                         },
                     ]
                 },
-                // {
-                //     "type": "Signer",
-                //     "user": {
-                //         "name": "Thiago Vitor de Faria Silva",
-                //         "identifier": "05256067699",
-                //         "email": "thiagov@previsa.com.br"
-                //     },
-                //     "allowElectronicSignature": false,
-                //     "prePositionedMarks": [
-                //         {
-                //             "type": "SignatureVisualRepresentation",
-                //             "uploadId": documentID,
-                //             "topLeftX": 50,
-                //             "topLeftY": 240,
-                //             "width": 200,
-                //             "pageNumber": pdfPageCount
-                //         },
-                //     ]
-                // },
-                // {
-                //     "type": "Signer",
-                //     "user": {
-                //         "name": "Lafayette Vilella de Moraes Neto",
-                //         "identifier": "62845888600",
-                //         "email": "lafayette@previsa.com.br"
-                //     },
-                //     "allowElectronicSignature": false,
-                //     "prePositionedMarks": [
-                //         {
-                //             "type": "SignatureVisualRepresentation",
-                //             "uploadId": documentID,
-                //             "topLeftX": 50,
-                //             "topLeftY": 375,
-                //             "width": 200,
-                //             "pageNumber": pdfPageCount
-                //         },
-                //     ]
-                // },
+                {
+                    "type": "Signer",
+                    "user": {
+                        "name": "Thiago Vitor de Faria Silva",
+                        "identifier": "05256067699",
+                        "email": "thiagov@previsa.com.br"
+                    },
+                    "allowElectronicSignature": false,
+                    "prePositionedMarks": [
+                        {
+                            "type": "SignatureVisualRepresentation",
+                            "uploadId": documentID,
+                            "topLeftX": 50,
+                            "topLeftY": 240,
+                            "width": 200,
+                            "pageNumber": pdfPageCount
+                        },
+                    ]
+                },
+                {
+                    "type": "Signer",
+                    "user": {
+                        "name": "Lafayette Vilella de Moraes Neto",
+                        "identifier": "62845888600",
+                        "email": "lafayette@previsa.com.br"
+                    },
+                    "allowElectronicSignature": false,
+                    "prePositionedMarks": [
+                        {
+                            "type": "SignatureVisualRepresentation",
+                            "uploadId": documentID,
+                            "topLeftX": 50,
+                            "topLeftY": 375,
+                            "width": 200,
+                            "pageNumber": pdfPageCount
+                        },
+                    ]
+                },
             ]
         });
-        console.log("Documento criado em " + new Date());
+        signerLogger.info(`CONTRATO - ${clientName} - ${proposeId} criado.`)
     } catch (error) {
+        signerLogger.error(error)
         console.log(error);
     }
 }
