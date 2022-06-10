@@ -60,11 +60,12 @@ export async function createDocument(quote, clientName, proposeId) {
 
     let personData = await Ploomes.getPersonData(quote);
 
-    let personName = personData[0];
-    let personCPF = personData[1]
-    let personEmail = personData[2]
-
     try {
+
+        let personName = personData[0];
+        let personCPF = personData[1]
+        let personEmail = personData[2]
+
         await api.post('/documents', {
             "files": [
                 {
@@ -74,14 +75,14 @@ export async function createDocument(quote, clientName, proposeId) {
                     "contentType": "application/pdf"
                 }
             ],
-            "notifiedEmails": ["cleiciamonteiro@previsa.com.br"],
+            // "notifiedEmails": ["cleiciamonteiro@previsa.com.br"],
             "flowActions": [
                 {
                     "type": "Signer",
                     "user": {
-                        "name": personName,
-                        "identifier": personCPF,
-                        "email": personEmail
+                        "name": "stephan rossi",
+                        "identifier": "05976325610",
+                        "email": "stephan@previsa.com.br"
                     },
                     "allowElectronicSignature": true,
                     "prePositionedMarks": [
@@ -95,48 +96,50 @@ export async function createDocument(quote, clientName, proposeId) {
                         },
                     ]
                 },
-                {
-                    "type": "Signer",
-                    "user": {
-                        "name": "Thiago Vitor de Faria Silva",
-                        "identifier": "05256067699",
-                        "email": "thiagov@previsa.com.br"
-                    },
-                    "allowElectronicSignature": false,
-                    "prePositionedMarks": [
-                        {
-                            "type": "SignatureVisualRepresentation",
-                            "uploadId": documentID,
-                            "topLeftX": 50,
-                            "topLeftY": 240,
-                            "width": 200,
-                            "pageNumber": pdfPageCount
-                        },
-                    ]
-                },
-                {
-                    "type": "Signer",
-                    "user": {
-                        "name": "Lafayette Vilella de Moraes Neto",
-                        "identifier": "62845888600",
-                        "email": "lafayette@previsa.com.br"
-                    },
-                    "allowElectronicSignature": false,
-                    "prePositionedMarks": [
-                        {
-                            "type": "SignatureVisualRepresentation",
-                            "uploadId": documentID,
-                            "topLeftX": 50,
-                            "topLeftY": 375,
-                            "width": 200,
-                            "pageNumber": pdfPageCount
-                        },
-                    ]
-                },
-            ]
+                // {
+                //     "type": "Signer",
+                //     "user": {
+                //         "name": "Thiago Vitor de Faria Silva",
+                //         "identifier": "05256067699",
+                //         "email": "thiagov@previsa.com.br"
+                //     },
+                //     "allowElectronicSignature": false,
+                //     "prePositionedMarks": [
+                //         {
+                //             "type": "SignatureVisualRepresentation",
+                //             "uploadId": documentID,
+                //             "topLeftX": 50,
+                //             "topLeftY": 240,
+                //             "width": 200,
+                //             "pageNumber": pdfPageCount
+                //         },
+                //     ]
+                // },
+                // {
+                //     "type": "Signer",
+                //     "user": {
+                //         "name": "Lafayette Vilella de Moraes Neto",
+                //         "identifier": "62845888600",
+                //         "email": "lafayette@previsa.com.br"
+                //     },
+                //     "allowElectronicSignature": false,
+                //     "prePositionedMarks": [
+                //         {
+                //             "type": "SignatureVisualRepresentation",
+                //             "uploadId": documentID,
+                //             "topLeftX": 50,
+                //             "topLeftY": 375,
+                //             "width": 200,
+                //             "pageNumber": pdfPageCount
+                //         },
+                //     ]
+                // },
+            ],
         });
         signerLogger.info(`CONTRATO - ${clientName} - ${proposeId} criado.`)
     } catch (error) {
         signerLogger.error(`createDocument: ${error}`)
     }
 }
+
+createDocument(3799055)

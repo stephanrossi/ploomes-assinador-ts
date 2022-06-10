@@ -8,3 +8,10 @@
 {"level":"error","message":"getQuoteDoc: ReferenceError: quotee is not defined","timestamp":"2022-06-09 13:32:37"}
 {"level":"error","message":"getQuoteDoc: TypeError: Cannot read properties of undefined (reading 'DocumentUrl')","timestamp":"2022-06-09 13:32:53"}
 {"level":"error","message":"getQuoteDoc: TypeError: Cannot read properties of undefined (reading 'DocumentUrl')","timestamp":"2022-06-09 13:33:40"}
+{"level":"error","message":"CPF is missing on quote 3799055","timestamp":"2022-06-10 13:31:20"}
+{"level":"error","message":"CPF is missing on quote 3799055","timestamp":"2022-06-10 13:36:15"}
+{"level":"error","message":"CPF is missing on quote 3799055","timestamp":"2022-06-10 13:38:24"}
+{"level":"error","message":"getPersonData: Error: pessoa sem CPF","timestamp":"2022-06-10 13:41:43"}
+{"level":"error","message":"CPF is missing on quote 3799055","timestamp":"2022-06-10 14:11:54"}
+{"level":"error","message":"CPF is missing on quote 3799055","timestamp":"2022-06-10 14:13:41"}
+{"level":"error","message":"CPF is missing on quote 3799055","timestamp":"2022-06-10 14:14:44"}

@@ -5,6 +5,7 @@ import fs from 'fs'
 
 import api from './api/ploomes.js'
 import { ploomesLogger } from "./logger.js";
+import { sendEmail } from "./sendMail.js";
 
 export async function getPersonID(quote) {
 
@@ -34,13 +35,14 @@ export async function getPersonData(quote) {
         let personEmail = getPersonData.data.value[0].Email
 
         if (personCPF == null || '' || undefined) {
+            await sendEmail(personName)
             ploomesLogger.error(`CPF is missing on quote ${quote}`)
-            return false;
+            return;
         }
 
         if (personEmail == null || '' || undefined) {
             ploomesLogger.error(`E-mail is missing on quote ${quote}`)
-            return false;
+            return;
         }
 
         personData.push(personName, personCPF, personEmail)

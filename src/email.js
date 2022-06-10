@@ -51,11 +51,4 @@ const readMail = async () => {
     }
 };
 
-function monitorEmail() {
-    setInterval(readMail, 120000)
-
-    console.log("Monitorando e-mails ...");
-}
-
-// readMail()
-monitorEmail()
+readMail()
