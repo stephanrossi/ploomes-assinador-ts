@@ -1,8 +1,12 @@
+import dotenv from 'dotenv'
+
+dotenv.config()
+
 export const READ_MAIL_CONFIG = {
     imap: {
-        user: 'testedin@previsa.com.br',
-        password: 'p4Agard@',
-        host: 'outlook.office365.com',
+        user: process.env.EMAIL_USER,
+        password: process.env.EMAIL_PASSWORD,
+        host: process.env.EMAIL_HOST,
         port: 993,
         authTimeout: 10000,
         tls: true,
@@ -11,9 +15,9 @@ export const READ_MAIL_CONFIG = {
 };
 
 export const SEND_MAIL_CONFIG = {
-    service: 'outlook',
+    service: process.env.EMAIL_SERVVICE,
     auth: {
-        user: 'testedin@previsa.com.br',
-        pass: 'p4Agard@',
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
     },
 };

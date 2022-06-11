@@ -2,7 +2,7 @@ import * as Ploomes from './ploomes.js'
 import pdf2base64 from 'pdf-to-base64'
 import path from 'path'
 
-import api from './api/assinador.js'
+import { apiSigner } from './api/index.js'
 import { signerLogger } from './logger.js'
 
 export async function getQuoteHash(quote) {
@@ -39,7 +39,7 @@ export async function uploadHash(quote) {
         let hash = getHash[0]
         let pdfPageCount = getHash[1]
 
-        let postHash = await api.post('/uploads/bytes', {
+        let postHash = await apiSigner.post('/uploads/bytes', {
             "bytes": hash
         })
 
@@ -50,23 +50,24 @@ export async function uploadHash(quote) {
         return hashInfo
     } catch (error) {
         signerLogger.error(`uploadHash: ${error}`)
+        return false;
     }
 }
 
 export async function createDocument(quote, clientName, proposeId) {
-    let getDocInfo = await uploadHash(quote)
-    let documentID = getDocInfo[0]
-    let pdfPageCount = getDocInfo[1]
-
-    let personData = await Ploomes.getPersonData(quote);
-
     try {
+
+        let getDocInfo = await uploadHash(quote)
+        let documentID = getDocInfo[0]
+        let pdfPageCount = getDocInfo[1]
+
+        let personData = await Ploomes.getPersonData(quote);
 
         let personName = personData[0];
         let personCPF = personData[1]
         let personEmail = personData[2]
 
-        await api.post('/documents', {
+        await apiSigner.post('/documents', {
             "files": [
                 {
                     "displayName": `CONTRATO - ${clientName} - ${proposeId}`,
@@ -139,7 +140,6 @@ export async function createDocument(quote, clientName, proposeId) {
         signerLogger.info(`CONTRATO - ${clientName} - ${proposeId} criado.`)
     } catch (error) {
         signerLogger.error(`createDocument: ${error}`)
+        return false;
     }
 }
-
-createDocument(3799055)

@@ -2,15 +2,18 @@ import hbs from 'nodemailer-express-handlebars'
 import nodemailer from 'nodemailer'
 import path from 'path'
 
+import dotenv from 'dotenv'
+dotenv.config()
+
 // initialize nodemailer
 var transporter = nodemailer.createTransport(
     {
-        host: "smtp.office365.com",
-        port: 587,
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_SMTP_PORT,
         secure: false, // upgrade later with STARTTLS
         auth: {
-            user: "testedin@previsa.com.br",
-            pass: "p4Agard@",
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD,
         },
     }
 );
@@ -28,25 +31,21 @@ const handlebarOptions = {
 transporter.use('compile', hbs(handlebarOptions))
 
 // trigger the sending of the E-mail
-export async function sendEmail(personName) {
+export async function sendingEmail(personName) {
     var mailOptions = {
         from: '"Teste DIN" <testedin@previsa.com.br>', // sender address
         to: 'stephan@previsa.com.br', // list of receivers
-        subject: 'Alerta Assinador Previsa',
+        subject: 'Alerta - Assinador Previsa',
         template: 'email', // the name of the template file i.e email.handlebars
         context: {
-            // name: "Adebola", // replace {{name}} with Adebola
-            // company: 'My Company', // replace {{company}} with My Company
             personName
-
         }
     };
 
-    transporter.sendMail(mailOptions, function (error, info) {
+    transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             return console.log(error);
         }
         console.log('Message sent: ' + info.response);
     });
 }
-sendEmail()

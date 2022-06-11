@@ -23,3 +23,28 @@
 {"level":"info","message":"No unread messages was found.","timestamp":"2022-06-09 10:49:46"}
 {"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-09 10:50:06"}
 {"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-09 11:04:06"}
+{"level":"error","message":"readMail: Error: LOGIN failed.","timestamp":"2022-06-11 11:06:57"}
+{"level":"error","message":"readMail: Error: LOGIN failed.","timestamp":"2022-06-11 11:10:20"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 11:38:44"}
+{"level":"info","message":"No unread messages were found.","timestamp":"2022-06-11 11:38:45"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 13:23:57"}
+{"level":"info","message":"No unread messages were found.","timestamp":"2022-06-11 13:23:57"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 13:25:23"}
+{"level":"info","message":"No unread messages were found.","timestamp":"2022-06-11 13:25:23"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 13:26:20"}
+{"level":"info","message":"No unread messages were found.","timestamp":"2022-06-11 13:26:21"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 13:27:10"}
+{"level":"info","message":"No unread messages were found.","timestamp":"2022-06-11 13:27:11"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 13:28:03"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 13:30:27"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 13:36:52"}
+{"level":"info","message":"No unread messages were found.","timestamp":"2022-06-11 13:36:52"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 13:37:04"}
+{"level":"error","message":"readMail: CPF is missing.","timestamp":"2022-06-11 13:37:05"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 13:39:43"}
+{"level":"error","message":"readMail: CPF on contract 3881616 is missing.","timestamp":"2022-06-11 13:39:44"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 13:40:42"}
+{"level":"error","message":"readMail: CPF on contract 3881616 is missing.","timestamp":"2022-06-11 13:40:43"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 13:42:29"}
+{"level":"info","message":"CONNECTION SUCCESSFUL.","timestamp":"2022-06-11 13:45:56"}
+{"level":"error","message":"readMail: CPF on contract 3799055 is missing.","timestamp":"2022-06-11 13:45:57"}

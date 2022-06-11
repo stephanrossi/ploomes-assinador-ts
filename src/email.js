@@ -1,6 +1,7 @@
 import * as Assinador from './assinador.js'
 
 import { mailLogger } from './logger.js';
+import { sendingEmail } from './sendMail.js';
 
 import imaps from 'imap-simple'
 import { convert } from 'html-to-text';
@@ -26,7 +27,7 @@ const readMail = async () => {
             return false;
         }
 
-        results.forEach((res) => {
+        results.forEach(async (res) => {
             const text = res.parts.filter((part) => {
                 return part.which === 'TEXT';
             });
@@ -37,10 +38,20 @@ const readMail = async () => {
             emailText.split('\n').forEach(v => v.replace(/\s*(.*)\s*:\s*(.*)\s*/, (s, key, val) => {
                 obj[key] = isNaN(val) || val.length < 1 ? val || undefined : Number(val);
             }));
+            console.log(obj);
 
+            let clientCPF = obj.CPF_do_contato
             let contractId = parseInt(obj.id_contrato)
             let clientName = obj.Cliente.toUpperCase()
             let proposeId = parseInt(obj.Proposta_codigo)
+            let contactName = obj.Nome_do_contato
+
+
+            if (clientCPF == null || clientCPF == '' || clientCPF == undefined) {
+                mailLogger.error(`readMail: CPF on contract ${contractId} is missing.`)
+                await sendingEmail(clientName)
+                return false;
+            }
 
             Assinador.createDocument(contractId, clientName, proposeId)
         });

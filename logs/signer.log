@@ -13,3 +13,9 @@
 {"level":"info","message":"CONTRATO - undefined - undefined criado.","timestamp":"2022-06-10 13:41:44"}
 {"level":"error","message":"createDocument: TypeError: Cannot read properties of undefined (reading '0')","timestamp":"2022-06-10 14:13:41"}
 {"level":"error","message":"createDocument: TypeError: Cannot read properties of undefined (reading '0')","timestamp":"2022-06-10 14:14:44"}
+{"level":"error","message":"createDocument: TypeError: Cannot read property '0' of undefined","timestamp":"2022-06-11 11:06:57"}
+{"level":"error","message":"createDocument: TypeError: Cannot read property '0' of undefined","timestamp":"2022-06-11 11:10:20"}
+{"level":"error","message":"createDocument: ReferenceError: api is not defined","timestamp":"2022-06-11 11:38:45"}
+{"level":"error","message":"createDocument: ReferenceError: api is not defined","timestamp":"2022-06-11 13:28:05"}
+{"level":"info","message":"CONTRATO - ROKO EMPREENDIMENTOS IMOBILIARIOS LTDA - 676 criado.","timestamp":"2022-06-11 13:30:32"}
+{"level":"info","message":"CONTRATO - LIZITEC TELECOMUNICACOES EIRELI - 790 criado.","timestamp":"2022-06-11 13:42:34"}

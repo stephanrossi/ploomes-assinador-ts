@@ -3,14 +3,14 @@ import pdf from 'pdf-page-counter'
 import path from 'path'
 import fs from 'fs'
 
-import api from './api/ploomes.js'
+import { apiPloomes } from "./api/index.js";
 import { ploomesLogger } from "./logger.js";
-import { sendEmail } from "./sendMail.js";
+import { sendingEmail } from "./sendMail.js";
 
 export async function getPersonID(quote) {
 
     try {
-        const getPersonID = await api.get(`/Quotes?$filter=Id+eq+${quote}`)
+        const getPersonID = await apiPloomes.get(`/Quotes?$filter=Id+eq+${quote}`)
 
         let personID = getPersonID.data.value[0].PersonId
 
@@ -28,21 +28,21 @@ export async function getPersonData(quote) {
     let personID = await getPersonID(quote)
 
     try {
-        const getPersonData = await api.get(`/Contacts?$filter=Id+eq+${personID}`)
+        const getPersonData = await apiPloomes.get(`/Contacts?$filter=Id+eq+${personID}`)
 
         let personName = getPersonData.data.value[0].Name
         let personCPF = getPersonData.data.value[0].CPF
         let personEmail = getPersonData.data.value[0].Email
 
         if (personCPF == null || '' || undefined) {
-            await sendEmail(personName)
+            await sendingEmail(personName)
             ploomesLogger.error(`CPF is missing on quote ${quote}`)
-            return;
+            return false;
         }
 
         if (personEmail == null || '' || undefined) {
             ploomesLogger.error(`E-mail is missing on quote ${quote}`)
-            return;
+            return false;
         }
 
         personData.push(personName, personCPF, personEmail)
@@ -59,7 +59,7 @@ export async function getQuoteDoc(quote) {
     let quoteInfo = []
 
     try {
-        const getQuoteInfo = await api.get(`/Quotes?$filter=Id+eq+${quote}`)
+        const getQuoteInfo = await apiPloomes.get(`/Quotes?$filter=Id+eq+${quote}`)
 
         let quoteDocURL = getQuoteInfo.data.value[0].DocumentUrl
 
