@@ -1,0 +1,3 @@
+{"level":"error","message":"readMail: Error: connect ECONNREFUSED 127.0.0.1:143","timestamp":"2022-06-13 15:51:33"}
+{"level":"error","message":"readMail: Error: connect ECONNREFUSED 127.0.0.1:143","timestamp":"2022-06-13 15:53:39"}
+{"level":"error","message":"readMail: Error: connect ECONNREFUSED 127.0.0.1:143","timestamp":"2022-06-13 15:54:06"}
