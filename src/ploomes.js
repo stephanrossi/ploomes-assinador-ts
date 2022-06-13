@@ -4,8 +4,8 @@ import path from 'path'
 import fs from 'fs'
 
 import { apiPloomes } from "./api/index.js";
-import { ploomesLogger } from "./logger.js";
-import { sendingEmail } from "./sendMail.js";
+import { ploomesLogger } from "./helpers/logger.js";
+import { sendingEmail } from "./helpers/sendMail.js";
 
 export async function getPersonID(quote) {
 
@@ -31,16 +31,24 @@ export async function getPersonData(quote) {
         const getPersonData = await apiPloomes.get(`/Contacts?$filter=Id+eq+${personID}`)
 
         let personName = getPersonData.data.value[0].Name
-        let personCPF = getPersonData.data.value[0].CPF
-        let personEmail = getPersonData.data.value[0].Email
 
-        if (personCPF == null || '' || undefined) {
+        if (personName == null || personName == '' || personName == undefined) {
+            await sendingEmail(personName)
+            ploomesLogger.error(`Name is missing on quote ${quote}`)
+            return false;
+        }
+
+        let personCPF = getPersonData.data.value[0].CPF
+
+        if (personCPF == null || personCPF == '' || personCPF == undefined) {
             await sendingEmail(personName)
             ploomesLogger.error(`CPF is missing on quote ${quote}`)
             return false;
         }
 
-        if (personEmail == null || '' || undefined) {
+        let personEmail = getPersonData.data.value[0].Email
+
+        if (personEmail == null || personEmail == '' || personEmail == undefined) {
             ploomesLogger.error(`E-mail is missing on quote ${quote}`)
             return false;
         }

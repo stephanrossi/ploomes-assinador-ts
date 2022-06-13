@@ -20,3 +20,8 @@
 {"level":"error","message":"CPF is missing on quote 3799055","timestamp":"2022-06-11 11:38:45"}
 {"level":"error","message":"CPF is missing on quote 3799055","timestamp":"2022-06-11 13:28:05"}
 {"level":"error","message":"CPF is missing on quote 3799055","timestamp":"2022-06-11 13:30:28"}
+{"level":"error","message":"getPersonData: TypeError: Cannot read properties of undefined (reading 'Name')","timestamp":"2022-06-13 11:28:31"}
+{"level":"error","message":"getPersonData: TypeError: Cannot read properties of undefined (reading 'Name')","timestamp":"2022-06-13 11:29:05"}
+{"level":"error","message":"getPersonData: TypeError: Cannot read properties of undefined (reading 'Name')","timestamp":"2022-06-13 13:02:33"}
+{"level":"error","message":"getPersonData: TypeError: Cannot read properties of undefined (reading 'Name')","timestamp":"2022-06-13 13:05:08"}
+{"level":"error","message":"getPersonData: TypeError: Cannot read properties of undefined (reading 'Name')","timestamp":"2022-06-13 13:25:44"}

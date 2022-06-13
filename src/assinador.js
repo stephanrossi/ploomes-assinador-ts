@@ -3,7 +3,7 @@ import pdf2base64 from 'pdf-to-base64'
 import path from 'path'
 
 import { apiSigner } from './api/index.js'
-import { signerLogger } from './logger.js'
+import { signerLogger } from './helpers/logger.js'
 
 export async function getQuoteHash(quote) {
 

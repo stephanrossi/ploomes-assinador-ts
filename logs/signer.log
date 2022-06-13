@@ -19,3 +19,13 @@
 {"level":"error","message":"createDocument: ReferenceError: api is not defined","timestamp":"2022-06-11 13:28:05"}
 {"level":"info","message":"CONTRATO - ROKO EMPREENDIMENTOS IMOBILIARIOS LTDA - 676 criado.","timestamp":"2022-06-11 13:30:32"}
 {"level":"info","message":"CONTRATO - LIZITEC TELECOMUNICACOES EIRELI - 790 criado.","timestamp":"2022-06-11 13:42:34"}
+{"level":"info","message":"CONTRATO - LIZITEC TELECOMUNICACOES EIRELI - 790 criado.","timestamp":"2022-06-13 10:14:57"}
+{"level":"info","message":"CONTRATO - GENESIS CAPITAL LTDA - 773 criado.","timestamp":"2022-06-13 13:02:35"}
+{"level":"info","message":"CONTRATO - GENESIS CAPITAL LTDA - 773 criado.","timestamp":"2022-06-13 13:05:09"}
+{"level":"info","message":"CONTRATO - I S NET TELECOMUNICACOES LTDA - 421 criado.","timestamp":"2022-06-13 13:22:16"}
+{"level":"info","message":"CONTRATO - GENESIS CAPITAL LTDA - 773 criado.","timestamp":"2022-06-13 13:25:45"}
+{"level":"error","message":"uploadHash: AxiosError: Request failed with status code 400","timestamp":"2022-06-13 13:33:40"}
+{"level":"error","message":"createDocument: AxiosError: Request failed with status code 400","timestamp":"2022-06-13 13:33:40"}
+{"level":"info","message":"CONTRATO - GENESIS CAPITAL LTDA - 773 criado.","timestamp":"2022-06-13 13:33:41"}
+{"level":"info","message":"CONTRATO - I S NET TELECOMUNICACOES LTDA - 421 criado.","timestamp":"2022-06-13 13:38:38"}
+{"level":"info","message":"CONTRATO - LIZITEC TELECOMUNICACOES EIRELI - 790 criado.","timestamp":"2022-06-13 13:38:39"}
