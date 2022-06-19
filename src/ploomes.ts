@@ -7,12 +7,10 @@ import { apiPloomes } from "./api/index.js";
 import { ploomesLogger } from "./helpers/logger.js";
 import { sendingEmail } from "./helpers/sendMail.js";
 
-export type QuoteType = number
-
-export type QuoteTypeInfo = string[] | boolean;
+export type QuoteTypeInfo = string[] | boolean | number[];
 
 
-export async function getPersonID(quote: QuoteType) {
+export async function getPersonID(quote: number) {
 
     try {
         const getPersonID = await apiPloomes.get(`/Quotes?$filter=Id+eq+${quote}`)
@@ -26,7 +24,7 @@ export async function getPersonID(quote: QuoteType) {
     }
 }
 
-export async function getPersonData(quote: QuoteType) {
+export async function getPersonData(quote: number) {
 
     let personData = []
 
@@ -67,7 +65,7 @@ export async function getPersonData(quote: QuoteType) {
     }
 }
 
-export async function getQuoteDoc(quote: QuoteType): Promise<QuoteTypeInfo> {
+export async function getQuoteDoc(quote: number): Promise<QuoteTypeInfo> {
 
     let quoteInfo = []
 

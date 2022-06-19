@@ -5,9 +5,15 @@ import path from 'path'
 import { apiSigner } from './api/index.js'
 import { signerLogger } from './helpers/logger.js'
 
-import { QuoteType, QuoteTypeInfo } from './ploomes.js'
+import { QuoteTypeInfo } from './ploomes.js'
 
-export async function getQuoteHash(quote: QuoteType): Promise<QuoteTypeInfo> {
+type DocumentProps = {
+    quote: number
+    clientName: string
+    proposeId: number
+}
+
+export async function getQuoteHash(quote: number): Promise<QuoteTypeInfo> {
 
     try {
         let getQuoteInfo = await Ploomes.getQuoteDoc(quote)
@@ -31,7 +37,7 @@ export async function getQuoteHash(quote: QuoteType): Promise<QuoteTypeInfo> {
     }
 }
 
-export async function uploadHash(quote: QuoteType): Promise<QuoteTypeInfo | number[]> {
+export async function uploadHash(quote: number): Promise<QuoteTypeInfo> {
 
     try {
         let hashInfo = []
@@ -56,14 +62,14 @@ export async function uploadHash(quote: QuoteType): Promise<QuoteTypeInfo | numb
     }
 }
 
-export async function createDocument(quote: QuoteType, clientName: string, proposeId: number) {
+export async function createDocument(DocumentProps: DocumentProps) {
     try {
 
-        let getDocInfo = await uploadHash(quote)
+        let getDocInfo = await uploadHash(DocumentProps.quote)
         let documentID = getDocInfo[0 as keyof typeof getDocInfo]
         let pdfPageCount = getDocInfo[1 as keyof typeof getDocInfo]
 
-        let personData = await Ploomes.getPersonData(quote);
+        let personData = await Ploomes.getPersonData(DocumentProps.quote);
 
         let personName = personData[0 as keyof typeof personData];
         let personCPF = personData[1 as keyof typeof personData]
@@ -72,9 +78,9 @@ export async function createDocument(quote: QuoteType, clientName: string, propo
         await apiSigner.post('/documents', {
             "files": [
                 {
-                    "displayName": `CONTRATO - ${clientName} - ${proposeId}`,
+                    "displayName": `CONTRATO - ${DocumentProps.clientName} - ${DocumentProps.proposeId}`,
                     "id": documentID,
-                    "name": `CONTRATO - ${clientName}.pdf`,
+                    "name": `CONTRATO - ${DocumentProps.clientName}.pdf`,
                     "contentType": "application/pdf"
                 }
             ],
@@ -139,7 +145,7 @@ export async function createDocument(quote: QuoteType, clientName: string, propo
                 // },
             ],
         });
-        signerLogger.info(`CONTRATO - ${clientName} - ${proposeId} criado.`)
+        signerLogger.info(`CONTRATO - ${DocumentProps.clientName} - ${DocumentProps.proposeId} criado.`)
     } catch (error) {
         signerLogger.error(`createDocument: ${error}`)
         return false;
