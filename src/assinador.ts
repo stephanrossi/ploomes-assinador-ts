@@ -4,14 +4,15 @@ import path from 'path'
 
 import { apiSigner } from './api/index.js'
 import { signerLogger } from './helpers/logger.js'
-import { QuoteType } from './ploomes.js'
 
-export async function getQuoteHash(quote) {
+import { QuoteType, QuoteTypeInfo } from './ploomes.js'
+
+export async function getQuoteHash(quote: QuoteType): Promise<QuoteTypeInfo> {
 
     try {
         let getQuoteInfo = await Ploomes.getQuoteDoc(quote)
-        let getQuote = getQuoteInfo[0]
-        let pdfPageCount = getQuoteInfo[1];
+        let getQuote = getQuoteInfo[0 as keyof typeof getQuoteInfo];
+        let pdfPageCount = getQuoteInfo[1 as keyof typeof getQuoteInfo];
 
         let quoteParams = []
 
@@ -30,21 +31,21 @@ export async function getQuoteHash(quote) {
     }
 }
 
-export async function uploadHash(quote) {
+export async function uploadHash(quote: QuoteType): Promise<QuoteTypeInfo | number[]> {
 
     try {
         let hashInfo = []
 
         let getHash = await getQuoteHash(quote)
 
-        let hash = getHash[0]
-        let pdfPageCount = getHash[1]
+        let hash = getHash[0 as keyof typeof getHash]
+        let pdfPageCount: number = getHash[1 as keyof typeof getHash]
 
         let postHash = await apiSigner.post('/uploads/bytes', {
             "bytes": hash
         })
 
-        let documentID = postHash.data.id
+        let documentID: number = postHash.data.id
 
         hashInfo.push(documentID, pdfPageCount)
 
@@ -55,18 +56,18 @@ export async function uploadHash(quote) {
     }
 }
 
-export async function createDocument(quote, clientName, proposeId) {
+export async function createDocument(quote: QuoteType, clientName, proposeId) {
     try {
 
         let getDocInfo = await uploadHash(quote)
-        let documentID = getDocInfo[0]
-        let pdfPageCount = getDocInfo[1]
+        let documentID = getDocInfo[0 as keyof typeof getDocInfo]
+        let pdfPageCount = getDocInfo[1 as keyof typeof getDocInfo]
 
         let personData = await Ploomes.getPersonData(quote);
 
-        let personName = personData[0];
-        let personCPF = personData[1]
-        let personEmail = personData[2]
+        let personName = personData[0 as keyof typeof personData];
+        let personCPF = personData[1 as keyof typeof personData]
+        let personEmail = personData[2 as keyof typeof personData]
 
         await apiSigner.post('/documents', {
             "files": [
