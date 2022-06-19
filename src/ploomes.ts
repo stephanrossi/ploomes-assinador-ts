@@ -7,9 +7,7 @@ import { apiPloomes } from "./api/index.js";
 import { ploomesLogger } from "./helpers/logger.js";
 import { sendingEmail } from "./helpers/sendMail.js";
 
-export type QuoteType = {
-    quote: number
-}
+export type QuoteType = number
 
 export type QuoteTypeInfo = string[] | boolean;
 

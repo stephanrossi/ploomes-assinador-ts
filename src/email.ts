@@ -5,7 +5,15 @@ import { mailLogger } from './helpers/logger.js';
 import { sendingEmail } from './helpers/sendMail.js';
 
 import { convert } from 'html-to-text';
-import { READ_MAIL_CONFIG } from './config.js';
+import { READ_MAIL_CONFIG } from './config'
+
+type EmailTypes = {
+    Cliente: string;
+    CPF_do_contato: string
+    id_contrato: string
+    Proposta_codigo: string
+    contractId: string
+}
 
 const readMail = async () => {
     try {
@@ -34,15 +42,15 @@ const readMail = async () => {
             let emailHTML = text[0].body;
             let emailText = convert(emailHTML);
 
-            let obj = {};
+            let obj = {} as EmailTypes;
 
-
-            emailText.split('\n').forEach(v => v.replace(/\s*(.*)\s*:\s*(.*)\s*/, (s, key, val) => {
+            emailText.split('\n').forEach(v => v.replace(/\s*(.*)\s*:\s*(.*)\s*/, (s, key: keyof EmailTypes, val): any => {
                 obj[key] = isNaN(val) || val.length < 1 ? val || undefined : Number(val);
             }));
 
             let clientName = obj.Cliente.toUpperCase()
             let clientCPF = obj.CPF_do_contato
+            let contractId = parseInt(obj.id_contrato)
 
             if (clientCPF == null || clientCPF == '' || clientCPF == undefined) {
                 mailLogger.error(`readMail: CPF on contract ${contractId} is missing.`)
@@ -50,7 +58,6 @@ const readMail = async () => {
                 return false;
             }
 
-            let contractId = parseInt(obj.id_contrato)
             let proposeId = parseInt(obj.Proposta_codigo)
 
             await Assinador.createDocument(contractId, clientName, proposeId)
@@ -58,7 +65,6 @@ const readMail = async () => {
         connection.end();
     } catch (error) {
         mailLogger.error(`readMail: ${error}`)
-        connection.end();
         return false;
     }
 };

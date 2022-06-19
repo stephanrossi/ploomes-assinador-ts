@@ -56,7 +56,7 @@ export async function uploadHash(quote: QuoteType): Promise<QuoteTypeInfo | numb
     }
 }
 
-export async function createDocument(quote: QuoteType, clientName, proposeId) {
+export async function createDocument(quote: QuoteType, clientName: string, proposeId: number) {
     try {
 
         let getDocInfo = await uploadHash(quote)
